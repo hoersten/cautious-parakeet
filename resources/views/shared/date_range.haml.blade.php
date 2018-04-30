@@ -1,0 +1,1 @@
+{{$obj->start_date}}{{(($obj->start_date === $obj->end_date) ? '' : ' - ' . $obj->end_date)}}

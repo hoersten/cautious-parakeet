@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Trips;
+namespace App\Http\Requests\Highlights;
 
 use App\Attendee;
+use App\Highlight;
 use App\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
@@ -22,10 +23,10 @@ class StoreRequest extends FormRequest {
   public function rules() {
     return [
       'name' => 'required',
-      'type' => 'required',
+      'lat' => 'required|numeric',
+      'lon' => 'required|numeric',
       'start_date' => 'required|date',
       'end_date' => 'required|date|after_or_equal:start_date',
-      'color' => 'required',
     ];
   }
 
@@ -33,10 +34,9 @@ class StoreRequest extends FormRequest {
     return $this->model;
   }
 
-  public function store() {
-    $this->model = new Trip(Request::input());
-    $this->model->user_id = auth()->id();
-    if ($this->model->save()) {
+  public function store(Trip $trip) {
+    $this->model = new Highlight(Request::input());
+    if ($trip->highlights()->save($this->model)) {
       $this->updateAttendees();
       return true;
     }

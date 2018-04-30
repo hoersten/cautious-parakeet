@@ -6,6 +6,16 @@ use App\Highlight;
 
 class Trip extends Model {
   /**
+   * Global scope to order by start_date by default
+   */
+  protected static function boot() {
+    parent::boot();
+    static::addGlobalScope('order', function(\Illuminate\Database\Eloquent\Builder $builder) {
+      $builder->orderBy('start_date', 'asc');
+    });
+  }
+
+  /**
    * The attributes that are mass assignable.
    *
    * @var array

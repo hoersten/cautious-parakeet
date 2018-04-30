@@ -10,7 +10,7 @@
   .row
     .col-12
       %div.alert.alert-danger
-        %ul
+        %ul.my-0
           @foreach ($errors->all() as $error)
           %li {{ $error }}
           @endforeach

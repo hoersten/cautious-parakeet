@@ -11,6 +11,7 @@
       %li
         %a{'href' => route('trips.show', ['trip' => $trip])}
           {{ $trip->name }}
+        ( @include('shared.date_range', ['obj' => $trip]))
       @endforeach
 .row
   .col

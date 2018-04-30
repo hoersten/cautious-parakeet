@@ -43,7 +43,7 @@ class TripController extends Controller {
   /**
    * Store a newly created resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Http\Requests\Trips\StoreRequest  $request
    * @return \Illuminate\Http\Response
    */
   public function store(StoreRequest $request) {
@@ -85,7 +85,7 @@ class TripController extends Controller {
   /**
    * Update the specified resource in storage.
    *
-   * @param  \Illuminate\Http\Request  $request
+   * @param  \App\Http\Requests\Trips\UpdateRequest  $request
    * @param  \App\Trip  $trip
    * @return \Illuminate\Http\Response
    */

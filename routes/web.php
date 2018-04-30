@@ -22,15 +22,14 @@ Route::group(['middleware' => ['web','auth'], 'prefix' => 'trips'], function() {
   Route::patch('/{trip}', 'TripController@update')->name('trips.update');
   Route::put('/{trip}', 'TripController@update')->name('trips.update');
   Route::delete('/{trip}', 'TripController@destroy')->name('trips.destroy');
-  Route::group(['middleware' => 'web', 'prefix' => 'highlights'], function() {
-    Route::get('/', 'HighLightsController@index')->name('highlights.index');
-    Route::get('/create', 'HighLightsController@create')->name('highlights.create');
-    Route::post('/', 'HighLightsController@store')->name('highlights.store');
-    Route::get('/{highlight}', 'HighLightsController@show')->name('highlights.show');
-    Route::get('/{highlight}/edit', 'HighLightsController@edit')->name('highlights.edit');
-    Route::patch('/{highlight}', 'HighLightsController@update')->name('highlights.update');
-    Route::put('/{highlight}', 'HighLightsController@update')->name('highlights.update');
-    Route::delete('/{highlight}', 'HighLightsController@destroy')->name('highlights.destroy');
+  Route::group(['middleware' => 'web', 'prefix' => '{trip}/highlights'], function() {
+    Route::get('/create', 'HighLightController@create')->name('highlights.create');
+    Route::post('/', 'HighLightController@store')->name('highlights.store');
+    Route::get('/{highlight}', 'HighLightController@show')->name('highlights.show');
+    Route::get('/{highlight}/edit', 'HighLightController@edit')->name('highlights.edit');
+    Route::patch('/{highlight}', 'HighLightController@update')->name('highlights.update');
+    Route::put('/{highlight}', 'HighLightController@update')->name('highlights.update');
+    Route::delete('/{highlight}', 'HighLightController@destroy')->name('highlights.destroy');
   });
 });
 

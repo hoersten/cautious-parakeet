@@ -1,4 +1,4 @@
-%a.btn.btn-secondary.text-white{"title"=>'Delete Trip', "data-toggle"=>"modal", "data-target"=>"#deleteModal-" . $trip->slug}
+%a.btn.btn-danger.text-white{"title"=>'Delete Trip', "data-toggle"=>"modal", "data-target"=>"#deleteModal-" . $trip->slug}
   Delete
 
 .modal.fade{ "tabindex"=>"-1", "role"=>"dialog", "aria-labelledby"=>"#deleteModalLabel", "aria-hidden"=>"true", "id" => "deleteModal-" . $trip->slug }

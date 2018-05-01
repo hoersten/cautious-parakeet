@@ -8,7 +8,8 @@ class UpdateRequest extends StoreRequest {
 
   public function update() {
     $this->model = $this->highlight();
-    $this->model->update(Request::input());
+    $input = $this->getInput();
+    $this->model->update($input);
     $this->updateAttendees();
     return $this->model->save();
   }

@@ -22,8 +22,8 @@ class CreateHighLightsTable extends Migration {
       $table->string('state')->nullable();
       $table->string('zip')->nullable();
       $table->string('country')->nullable();
-      $table->decimal('lat', 6);
-      $table->decimal('lon', 6);
+      $table->decimal('lat', 10, 7);
+      $table->decimal('lon', 10, 7);
       $table->date('start_date');
       $table->date('end_date');
       $table->string('description');

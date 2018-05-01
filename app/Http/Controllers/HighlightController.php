@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Attendee;
 use App\Highlight;
 use App\Trip;
+use App\Helpers\State;
+use App\Helpers\Country;
 use App\Http\Requests\Highlights\StoreRequest;
 use App\Http\Requests\Highlights\UpdateRequest;
 use Illuminate\Http\Request;
@@ -23,7 +25,9 @@ class HighlightController extends Controller {
                    ];
     $highlight = new Highlight;
     $attendees = Attendee::all();
-    return view('highlights.create', ['trip' => $trip, 'highlight' => $highlight, 'attendees' => $attendees, 'breadcrumbs' => $breadcrumbs]);
+    $states = State::get();
+    $countries = Country::get();
+    return view('highlights.create', ['trip' => $trip, 'highlight' => $highlight, 'attendees' => $attendees, 'states' => $states, 'countries' => $countries, 'breadcrumbs' => $breadcrumbs]);
   }
 
   /**
@@ -67,7 +71,9 @@ class HighlightController extends Controller {
                      [ 'url' => route('highlights.edit', [ 'trip' => $trip, 'highlight' => $highlight]), 'text' => 'Edit Highlight', 'active' => true]
                    ];
     $attendees = Attendee::all();
-    return view('highlights.edit', ['trip' => $trip, 'highlight' => $highlight, 'attendees' => $attendees, 'breadcrumbs' => $breadcrumbs]);
+    $states = State::get();
+    $countries = Country::get();
+    return view('highlights.edit', ['trip' => $trip, 'highlight' => $highlight, 'attendees' => $attendees, 'states' => $states, 'countries' => $countries, 'breadcrumbs' => $breadcrumbs]);
   }
 
   /**

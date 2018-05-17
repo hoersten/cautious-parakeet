@@ -46,7 +46,11 @@ class StoreRequest extends FormRequest {
   protected function getGeoPoints() {
     $input = Request::input();
     $address = join(',', [$input['road'], $input['road2'], $input['city'], $input['state'], $input['zip'], $input['country']]);
-    return app('geocoder')->geocode($address)->get()[0]->getCoordinates();
+    $coords = app('geocoder')->geocode($address)->get();
+    if (!empty($coords)) {
+      return $coords[0]->getCoordinates();
+    }
+    return null;
   }
 
   protected function updateAttendees() {

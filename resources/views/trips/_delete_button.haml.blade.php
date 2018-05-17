@@ -19,5 +19,5 @@
         %form{'action' => route('trips.destroy', $trip), 'id' => 'deleteTripForm', 'method' => 'POST'}
           {{ csrf_field() }}
           %input{ "name" => "_method", "type" => "hidden", "value" => "DELETE" }
-          %button.btn.btn-primary
+          %button.btn.btn-danger
             Continue

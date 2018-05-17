@@ -1,0 +1,16 @@
+.edit-tools {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin-right: ($grid-gutter-width / 2);
+  min-height: 1rem;
+  min-width: 100%;
+  a {
+    display: none;
+  }
+  &:hover {
+    a {
+      display: inline-block;
+    }
+  }
+}

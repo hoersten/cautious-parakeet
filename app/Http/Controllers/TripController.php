@@ -19,7 +19,7 @@ class TripController extends Controller {
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ], 
                      [ 'url' => route('trips.index'), 'text' => 'Trips', 'active' => true ],
                    ];
-    $trips = Trip::all();
+    $trips = Trip::orderBy('start_date', 'desc')->get();
     return view('trips.index', ['trips' => $trips, 'breadcrumbs' => $breadcrumbs]);
   }
 
@@ -101,7 +101,7 @@ class TripController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function destroy(Trip $trip) {
-    Trip::destroy($trip->id);
+    $trip->delete();
     return redirect(route('trips.index'))->withFlash('Trip deleted.');
   }
 

@@ -97,7 +97,7 @@ class HighlightController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function destroy(Trip $trip, Highlight $highlight) {
-    Highlight::destroy($highlight->id);
+    $highlight->delete();
     return redirect(route('trips.show', $trip))->withFlash('Highlight deleted.');
   }
 }

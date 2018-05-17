@@ -29,4 +29,8 @@ class Highlight extends Model {
   public function attendees() {
     return $this->belongsToMany(Attendee::class, 'highlights_attendees');
   }
+
+  public function pictures() {
+    return $this->hasMany(Picture::class);
+  }
 }

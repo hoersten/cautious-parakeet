@@ -3,7 +3,7 @@
   %nav.navbar.navbar-expand-md.navbar-toggler-right.navbar-light.bg-light{ role: 'navigation'}
     .container
       %a.navbar-brand{'href' => route('home')}
-        My Travel Log
+        Our Travel Photos
       %button.navbar-toggler{ 'type' => 'button', 'data-toggle' => 'collapse', 'data-target' => '#navbar', 'aria-controls' => 'navbar', 'aria-expanded' => 'false', 'aria-label' => 'Toggle navigation' }
         %span.navbar-toggler-icon
       #navbar.collapse.navbar-collapse

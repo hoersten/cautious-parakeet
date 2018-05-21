@@ -17,19 +17,23 @@
     .row
       @foreach($highlight->pictures as $picture)
       .col-3
-        - if ($trip->user_id == Auth::id())
-          .edit-tools.text-right
-            %a.mr-1{'href' => route('pictures.edit', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture]) }><
-              %i.fas.fa-edit
-            %a.mr-1{'href' => '#', 'data-toggle' => 'modal', 'data-target' => '#deletePicture', 'data-picture' => route('pictures.destroy', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture ]) }><
-              %i.fas.fa-trash
+        @can('update', $trip)
+        .edit-tools.text-right
+          %a.mr-1{'href' => route('pictures.edit', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture]) }><
+            %i.fas.fa-edit
+          @can('delete', $trip)
+          %a.mr-1{'href' => '#', 'data-toggle' => 'modal', 'data-target' => '#deletePicture', 'data-picture' => route('pictures.destroy', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture ]) }><
+            %i.fas.fa-trash
+          @endcan
+        @endcan
         %a{'id' => 'pic-' . $picture->id, 'href' => route('pictures.show', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture ]), 'data-toggle' => 'lightbox', 'data-gallery' => 'highlights', 'data-footer' => $picture->caption,  'data-type' => 'image' }
           %img.img-fluid{'src' => route('pictures.show', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture ])}
           %p=$picture->caption
       @endforeach
-    - if ($trip->user_id == Auth::id())
-      %a.btn.btn-primary{ 'href' => route('pictures.create', ['trip' => $trip, 'highlight' => $highlight])}
-        Add Pictures
+    @can('update', $trip)
+    %a.btn.btn-primary{ 'href' => route('pictures.create', ['trip' => $trip, 'highlight' => $highlight])}
+      Add Pictures
+    @endcan
 .row
   .col
     %div.highlight-description
@@ -46,10 +50,13 @@
   .col
     %a.btn.btn-primary{ 'href' => route('trips.show', $trip)}
       Back to trip
-    - if ($trip->user_id == Auth::id())
-      %a.btn.btn-secondary{ 'href' => route('highlights.edit', ['trip' => $trip, 'highlight' => $highlight])}
-        Edit
-      @include('highlights._delete_button')
+    @can('update', $trip)
+    %a.btn.btn-secondary{ 'href' => route('highlights.edit', ['trip' => $trip, 'highlight' => $highlight])}
+      Edit
+    @can('delete', $trip)
+    @include('highlights._delete_button')
+    @endcan
+    @endcan
 
 
 #deletePicture.modal.fade{'tabindex' => '-1', 'role' => 'dialog', 'aria-labelledby' => 'deleteTitle', 'aria-hidden' => 'true'}

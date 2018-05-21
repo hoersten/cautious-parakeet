@@ -26,7 +26,7 @@ class CreateHighLightsTable extends Migration {
       $table->decimal('lon', 10, 7);
       $table->date('start_date');
       $table->date('end_date');
-      $table->string('description');
+      $table->text('description')->nullable();
       $table->timestamps();
       $table->foreign('trip_id')->references('id')->on('trips')->onDelete('cascade');
     });

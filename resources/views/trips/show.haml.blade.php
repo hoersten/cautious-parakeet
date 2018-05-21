@@ -31,17 +31,21 @@
         ( @include('shared.date_range', [ 'obj' => $highlight ]))
 
       @endforeach
-    - if ($trip->user_id == Auth::id())
-      %a.btn.btn-primary{ 'href' => route('highlights.create', $trip)}
-        Add Highlight
+    @can('update', $trip)
+    %a.btn.btn-primary{ 'href' => route('highlights.create', $trip)}
+      Add Highlight
+    @endcan
 .row
   .col
     %a.btn.btn-primary{ 'href' => route('trips.index')}
       Back to trips
-    - if ($trip->user_id == Auth::id())
-      %a.btn.btn-secondary{ 'href' => route('trips.edit', $trip)}
-        Edit
-      @include('trips._delete_button')
+    @can('update', $trip)
+    %a.btn.btn-secondary{ 'href' => route('trips.edit', $trip)}
+      Edit
+    @can('delete', $trip)
+    @include('trips._delete_button')
+    @endcan
+    @endcan
 @endsection
 
 @section('footer_js')

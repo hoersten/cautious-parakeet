@@ -16,6 +16,7 @@ class TripController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function index() {
+    $this->authorize('index', Trip::class);
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ], 
                      [ 'url' => route('trips.index'), 'text' => 'Trips', 'active' => true ],
                    ];
@@ -29,6 +30,7 @@ class TripController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function create() {
+    $this->authorize('create', Trip::class);
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ], 
                      [ 'url' => route('trips.index'), 'text' => 'Trips' ],
                      [ 'url' => route('trips.create'), 'text' => 'New Trip', 'active' => true ],
@@ -47,6 +49,7 @@ class TripController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function store(StoreRequest $request) {
+    $this->authorize('create', Trip::class);
     $request->store();
     return redirect(route('trips.show', ['trip' => $request->model]));
   }
@@ -58,6 +61,7 @@ class TripController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function show(Trip $trip) {
+    $this->authorize('view', $trip);
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ], 
                      [ 'url' => route('trips.index'), 'text' => 'Trips' ],
                      [ 'url' => route('trips.show', $trip), 'text' => $trip->name, 'active' => true ],
@@ -73,6 +77,7 @@ class TripController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function edit(Trip $trip) {
+    $this->authorize('edit', $trip);
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ], 
                      [ 'url' => route('trips.index'), 'text' => 'Trips' ],
                      [ 'url' => route('trips.edit', $trip), 'text' => 'Edit Trip', 'active' => true ],
@@ -90,6 +95,7 @@ class TripController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function update(UpdateRequest $request, Trip $trip) {
+    $this->authorize('edit', $trip);
     $request->update();
     return redirect(route('trips.show', ['trip' => $request->model]));
   }
@@ -101,6 +107,7 @@ class TripController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function destroy(Trip $trip) {
+    $this->authorize('delete', $trip);
     $trip->delete();
     return redirect(route('trips.index'))->withFlash('Trip deleted.');
   }

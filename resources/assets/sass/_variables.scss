@@ -1,6 +1,7 @@
 
 // Body
-$body-bg: #f5f8fa;
+$body-bg: #ffffff;
+$text-color: #212121;
 
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
@@ -10,15 +11,18 @@ $panel-default-border: $laravel-border-color;
 $panel-inner-border: $laravel-border-color;
 
 // Brands
-$brand-primary: #3097D1;
+$brand-primary: #448AFF;
 $brand-info: #8eb4cb;
 $brand-success: #2ab27b;
 $brand-warning: #cbb956;
 $brand-danger: #bf5329;
 
+// Link
+$link-color: #448AFF;
+
 // Typography
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-$font-family-sans-serif: "Raleway", sans-serif;
+$font-family-sans-serif: "Lato", sans-serif;
 $line-height-base: 1.6;
 $text-color: #636b6f;
 
@@ -35,3 +39,6 @@ $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
 $panel-default-heading-bg: #fff;
+
+// Breadcrumbs
+$breadcrumb-bg: #CFD8DC;

@@ -1,6 +1,6 @@
 #app
 #header
-  %nav.navbar.navbar-expand-md.navbar-toggler-right.navbar-light.bg-light{ role: 'navigation'}
+  %nav.navbar.navbar-expand-md.navbar-toggler-right.navbar-dark.bg-dark{ role: 'navigation'}
     .container
       %a.navbar-brand{'href' => route('home')}
         Our Travel Photos
@@ -21,5 +21,5 @@
           - else
             %li.nav-item
               %a.nav-link{ 'href' => route('login') }
-              Login
+                Login
 @include('layouts.status')

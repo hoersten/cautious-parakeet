@@ -20,6 +20,7 @@ class PictureController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function create(Trip $trip, Highlight $highlight) {
+    $this->authorize('create', Picture::class);
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ],
                      [ 'url' => route('trips.index'), 'text' => 'Trips' ],
                      [ 'url' => route('trips.show', $trip), 'text' => $trip->name ],
@@ -39,6 +40,7 @@ class PictureController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function store(StoreRequest $request, Trip $trip, Highlight $highlight) {
+    $this->authorize('create', Picture::class);
     $request->store($highlight);
     return redirect(route('highlights.show', ['trip' => $trip, 'highlight' => $highlight]));
   }
@@ -52,6 +54,7 @@ class PictureController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function show(Trip $trip, Highlight $highlight, Picture $picture) {
+    $this->authorize('view', $picture);
     return \Image::make(Storage::path($picture->url))->response();
   }
 
@@ -64,6 +67,7 @@ class PictureController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function edit(Trip $trip, Highlight $highlight, Picture $picture) {
+    $this->authorize('update', $picture);
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ],
                      [ 'url' => route('trips.index'), 'text' => 'Trips' ],
                      [ 'url' => route('trips.show', $trip), 'text' => $trip->name ],
@@ -83,6 +87,7 @@ class PictureController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function update(UpdateRequest $request, Trip $trip, Highlight $highlight, Picture $picture) {
+    $this->authorize('update', $picture);
     $request->update($highlight);
     return redirect(route('highlights.show', ['trip' => $trip, 'highlight' => $highlight]));
   }
@@ -94,9 +99,8 @@ class PictureController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function destroy(Trip $trip, Highlight $highlight, Picture $picture) {
-    if (auth()->check()) {
-      $picture->delete();
-      return redirect(route('highlights.show', ['trip' => $trip, 'highlight' => $highlight]));
-    }
+    $this->authorize('delete', $picture);
+    $picture->delete();
+    return redirect(route('highlights.show', ['trip' => $trip, 'highlight' => $highlight]));
   }
 }

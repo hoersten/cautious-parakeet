@@ -51,7 +51,7 @@ class TripController extends Controller {
   public function store(StoreRequest $request) {
     $this->authorize('create', Trip::class);
     $request->store();
-    return redirect(route('trips.show', ['trip' => $request->model]));
+    return redirect(route('trips.show', ['trip' => $request->model()]));
   }
 
   /**
@@ -77,7 +77,7 @@ class TripController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function edit(Trip $trip) {
-    $this->authorize('edit', $trip);
+    $this->authorize('update', $trip);
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ], 
                      [ 'url' => route('trips.index'), 'text' => 'Trips' ],
                      [ 'url' => route('trips.edit', $trip), 'text' => 'Edit Trip', 'active' => true ],
@@ -95,9 +95,9 @@ class TripController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function update(UpdateRequest $request, Trip $trip) {
-    $this->authorize('edit', $trip);
+    $this->authorize('update', $trip);
     $request->update();
-    return redirect(route('trips.show', ['trip' => $request->model]));
+    return redirect(route('trips.show', ['trip' => $request->model()]));
   }
 
   /**

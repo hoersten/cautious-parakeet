@@ -18,6 +18,7 @@ class HighlightController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function create(Trip $trip) {
+    $this->authorize('create', Highlight::class);
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ],
                      [ 'url' => route('trips.index'), 'text' => 'Trips' ],
                      [ 'url' => route('trips.show', $trip), 'text' => $trip->name ],
@@ -38,8 +39,9 @@ class HighlightController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function store(StoreRequest $request, Trip $trip) {
+    $this->authorize('create', Highlight::class);
     $request->store($trip);
-    return redirect(route('trips.show', ['trip' => $trip]));
+    return redirect(route('highlights.show', ['trip' => $trip, 'highlight' => $request->model()]));
   }
 
   /**
@@ -50,6 +52,7 @@ class HighlightController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function show(Trip $trip, Highlight $highlight) {
+    $this->authorize('view', $highlight);
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ],
                      [ 'url' => route('trips.index'), 'text' => 'Trips' ],
                      [ 'url' => route('trips.show', $trip), 'text' => $trip->name],
@@ -65,6 +68,7 @@ class HighlightController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function edit(Trip $trip, Highlight $highlight) {
+    $this->authorize('update', $highlight);
     $breadcrumbs = [ [ 'url' => route('home'), 'text' => 'Home' ],
                      [ 'url' => route('trips.index'), 'text' => 'Trips' ],
                      [ 'url' => route('trips.show', $trip), 'text' => $trip->name ],
@@ -85,6 +89,7 @@ class HighlightController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function update(UpdateRequest $request, Trip $trip, Highlight $highlight) {
+    $this->authorize('update', $highlight);
     $request->update();
     return redirect(route('highlights.show', ['trip' => $trip, 'highlight' => $highlight]));
   }
@@ -97,6 +102,7 @@ class HighlightController extends Controller {
    * @return \Illuminate\Http\Response
    */
   public function destroy(Trip $trip, Highlight $highlight) {
+    $this->authorize('delete', $highlight);
     $highlight->delete();
     return redirect(route('trips.show', $trip))->withFlash('Highlight deleted.');
   }

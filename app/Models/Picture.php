@@ -13,6 +13,10 @@ class Picture extends Model {
     static::addGlobalScope('order', function(\Illuminate\Database\Eloquent\Builder $builder) {
       $builder->orderBy('date_taken', 'asc');
     });
+    // Cleanup files
+    static::deleted(function(Picture $picture) {
+      \Storage::delete($picture->url);
+    });
   }
 
   /**

@@ -17,11 +17,11 @@
     .row
       @foreach($highlight->pictures as $picture)
       .col-3
-        @can('update', $trip)
+        @can('update', $highlight)
         .edit-tools.text-right
           %a.mr-1{'href' => route('pictures.edit', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture]) }><
             %i.fas.fa-edit
-          @can('delete', $trip)
+          @can('delete', $highlight)
           %a.mr-1{'href' => '#', 'data-toggle' => 'modal', 'data-target' => '#deletePicture', 'data-picture' => route('pictures.destroy', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture ]) }><
             %i.fas.fa-trash
           @endcan
@@ -30,7 +30,7 @@
           %img.img-fluid{'src' => route('pictures.show', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture ])}
           %p=$picture->caption
       @endforeach
-    @can('update', $trip)
+    @can('update', $highlight)
     %a.btn.btn-primary{ 'href' => route('pictures.create', ['trip' => $trip, 'highlight' => $highlight])}
       Add Pictures
     @endcan
@@ -50,10 +50,10 @@
   .col
     %a.btn.btn-primary{ 'href' => route('trips.show', $trip)}
       Back to trip
-    @can('update', $trip)
+    @can('update', $highlight)
     %a.btn.btn-secondary{ 'href' => route('highlights.edit', ['trip' => $trip, 'highlight' => $highlight])}
       Edit
-    @can('delete', $trip)
+    @can('delete', $highlight)
     @include('highlights._delete_button')
     @endcan
     @endcan
@@ -97,7 +97,7 @@
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
       center: latLng,
-      mapTypeId: 'terrain'
+      mapTypeId: 'satellite'
     });
     var marker = new google.maps.Marker({
       position: latLng,
@@ -105,6 +105,7 @@
       label: "{{ $highlight->name }}"
     });
     var latlngbounds = new google.maps.LatLngBounds();
+    latlngbounds.extend(latLng);
     for (i = 0; i < markers.length; ++i) {
       var latLng = new google.maps.LatLng(markers[i][0],markers[i][1]);
       var marker = new google.maps.Marker({

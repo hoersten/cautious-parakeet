@@ -48,7 +48,7 @@ class PicturePolicy {
    * @return mixed
    */
   public function update(User $user, Picture $picture) {
-    return $picture->user_id === $user->id;
+    return $picture->highlight->trip->user_id === $user->id;
   }
 
   /**
@@ -59,6 +59,6 @@ class PicturePolicy {
    * @return mixed
    */
   public function delete(User $user, Picture $picture) {
-    return $picture->user_id === $user->id;
+    return $picture->highlight->trip->user_id === $user->id;
   }
 }

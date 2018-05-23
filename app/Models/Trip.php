@@ -13,6 +13,10 @@ class Trip extends Model {
     static::addGlobalScope('order', function(\Illuminate\Database\Eloquent\Builder $builder) {
       $builder->orderBy('start_date', 'asc');
     });
+    // Cleanup files
+    static::deleted(function(Trip $trip) {
+      \Storage::deleteDirectory('pictures/' . $trip->id);
+    });
   }
 
   /**
@@ -21,7 +25,7 @@ class Trip extends Model {
    * @var array
    */
   protected $fillable = [
-    'user_id', 'name', 'type', 'description', 'start_date', 'end_date', 'color',
+    'user_id', 'name', 'type', 'description', 'start_date', 'end_date',
   ];
 
   public function attendees() {

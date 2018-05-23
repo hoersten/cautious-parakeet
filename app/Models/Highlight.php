@@ -11,6 +11,10 @@ class Highlight extends Model {
     static::addGlobalScope('order', function(\Illuminate\Database\Eloquent\Builder $builder) {
       $builder->orderBy('start_date', 'asc');
     });
+    // Cleanup files
+    static::deleted(function(Highlight $highlight) {
+      \Storage::deleteDirectory('pictures/' . $highlight->trip_id . '/' . $highlight->id);
+    });
   }
 
   /**

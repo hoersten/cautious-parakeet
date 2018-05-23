@@ -4,7 +4,7 @@
 .row
   .col
     %h1
-      Welcome to My Travel Log
+      Welcome to Our Travel Photos
 -if (Auth::check())
   .row
     .col

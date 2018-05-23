@@ -62,7 +62,7 @@
       map = new google.maps.Map(document.getElementById('map'), {
         zoom: 11,
         center: new google.maps.LatLng(markers[0][0],markers[0][1]),
-        mapTypeId: 'terrain'
+        mapTypeId: 'satellite'
       });
       var latlngbounds = new google.maps.LatLngBounds();
       for (i = 0; i < markers.length; ++i) {

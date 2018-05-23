@@ -29,12 +29,6 @@
   .col-auto
     %input#end_date.form-control{'type' => 'date', 'required' => true, 'name' => 'end_date', 'value' => "#{ old('end_date', $trip->end_date) }" }
 .form-group.row
-  .col-sm-2
-    %label.col-form-label{'for' => 'color'}
-      Icon Color
-  .col-auto
-    %input#color.form-control{'type' => 'color', 'required' => true, 'name' => 'color', 'value' => "#{ old('color', $trip->color) }" }
-.form-group.row
   .col
     %label.col-form-label{'for' => 'description'}
       Description

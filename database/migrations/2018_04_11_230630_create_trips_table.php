@@ -20,7 +20,6 @@ class CreateTripsTable extends Migration {
       $table->text('description');
       $table->date('start_date');
       $table->date('end_date');
-      $table->string('color', 7);
       $table->timestamps();
       $table->foreign('user_id')->references('id')->on('users');
     });

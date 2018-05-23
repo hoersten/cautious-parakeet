@@ -48,7 +48,7 @@ class HighlightPolicy {
    * @return mixed
    */
   public function update(User $user, Highlight $highlight) {
-    return $highlight->user_id === $user->id;
+    return $highlight->trip->user_id === $user->id;
   }
 
   /**
@@ -59,6 +59,6 @@ class HighlightPolicy {
    * @return mixed
    */
   public function delete(User $user, Highlight $highlight) {
-    return $highlight->user_id === $user->id;
+    return $highlight->trip->user_id === $user->id;
   }
 }

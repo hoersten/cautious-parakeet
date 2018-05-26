@@ -8,6 +8,7 @@ use App\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Image;
 
 class StoreRequest extends FormRequest {
 
@@ -41,10 +42,10 @@ class StoreRequest extends FormRequest {
     }
   }
 
-  protected function getGeoPoints(Highlight $highlight, string $image) {
+  protected function getGeoPoints(Highlight $highlight, Image $image) {
     $coords = ['lat' => $highlight->lat, 'lon' => $highlight->lon];
     try {
-      $exif = \Image::make(Storage::path($image))->exif();
+      $exif = $image->exif();
       if (isset($exif['GPSLatitude'])) {
         $coords['lat'] = $this->getGPS($exif['GPSLatitude'], $exif['GPSLatitudeRef']);
       }
@@ -56,10 +57,10 @@ class StoreRequest extends FormRequest {
     return $coords;
   }
 
-  protected function getDateTaken(Highlight $highlight, string $image) {
+  protected function getDateTaken(Highlight $highlight, Image $image) {
     $date = $highlight->start_date;
     try {
-      $exif = \Image::make(Storage::path($image))->exif();
+      $exif = $image->exif();
       if (isset($exif['DateTimeOriginal'])) {
         $date = new \DateTime($exif['DateTimeOriginal']);
       }
@@ -70,18 +71,19 @@ class StoreRequest extends FormRequest {
 
   protected function getInput(Highlight $highlight, $image) {
     $input = Request::input();
-    $path = $image->store('pictures/' . $highlight->trip_id . '/' . $highlight->id);
-    $input['url'] = $path;
+    $img = \Image::make($image->path());
     if (empty($input['lat']) || empty($input['lon'])) {
-      $coords = $this->getGeoPoints($highlight, $path);
+      $coords = $this->getGeoPoints($highlight, $img);
       $input['lat'] = $coords['lat'];
       $input['lon'] = $coords['lon'];
     }
     if (empty($input['date_taken'])) {
-      $input['date_taken'] = $this->getDateTaken($highlight, $path);
+      $input['date_taken'] = $this->getDateTaken($highlight, $img);
     }
-    $img = \Image::make(Storage::path($path))->orientate();
-    $img->save();
+    $img->orientate();
+    $uploadPath = 'pictures/' . $highlight->trip_id . '/' . $highlight->id . '/' . $image->hashName();
+    Storage::cloud()->put($uploadPath, (string)$img->stream());
+    $input['url'] = $uploadPath;
     return $input;
   }
 

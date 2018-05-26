@@ -13,7 +13,7 @@ class Highlight extends Model {
     });
     // Cleanup files
     static::deleted(function(Highlight $highlight) {
-      \Storage::deleteDirectory('pictures/' . $highlight->trip_id . '/' . $highlight->id);
+      \Storage::cloud()->deleteDirectory('pictures/' . $highlight->trip_id . '/' . $highlight->id);
     });
   }
 

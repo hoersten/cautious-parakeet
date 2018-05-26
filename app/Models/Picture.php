@@ -15,7 +15,7 @@ class Picture extends Model {
     });
     // Cleanup files
     static::deleted(function(Picture $picture) {
-      \Storage::delete($picture->url);
+      \Storage::cloud()->delete($picture->url);
     });
   }
 

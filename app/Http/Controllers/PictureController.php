@@ -55,7 +55,7 @@ class PictureController extends Controller {
    */
   public function show(Trip $trip, Highlight $highlight, Picture $picture) {
     $this->authorize('view', $picture);
-    return \Image::make(Storage::path($picture->url))->response();
+    return \Image::make(Storage::cloud()->get($picture->url))->response();
   }
 
   /**

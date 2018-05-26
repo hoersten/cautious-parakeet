@@ -15,7 +15,7 @@ class Trip extends Model {
     });
     // Cleanup files
     static::deleted(function(Trip $trip) {
-      \Storage::deleteDirectory('pictures/' . $trip->id);
+      \Storage::cloud()->deleteDirectory('pictures/' . $trip->id);
     });
   }
 

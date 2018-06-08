@@ -24,7 +24,7 @@
         %input#lon.form-control{'type' => 'text', 'placeholder' => 'Enter Picture longitude', 'name' => 'lon', 'value' => "#{ old('lon', $picture->lon) }" }
     .form-group.row
       .col-sm-2
-        %label.col-form-label{'for' => 'date_taken'}
-          Date Taken
+        %label.col-form-label{'for' => 'datetime_taken'}
+          DateTime Taken
       .col-auto
-        %input#date_taken.form-control{'type' => 'date', 'name' => 'date_taken', 'value' => "#{ old('date_taken', $picture->date_taken) }" }
+        %input#date_taken.form-control{'type' => 'datetime-local', 'name' => 'datetime_taken', 'value' => "#{ old('datetime_taken', (empty($picture->datetime_taken) ? '' : $picture->datetime_taken->format('Y-m-d\\TH:i'))) }" }

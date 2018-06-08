@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+My Trips
+@endsection
 
 @section('content')
 @include('shared.breadcrumbs', [ 'breadcrumbs' => $breadcrumbs])

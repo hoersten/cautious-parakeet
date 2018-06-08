@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest {
       'picture.*' => 'required|mimes:jpeg,gif,png',
       'lat' => 'nullable|numeric',
       'lon' => 'nullable|numeric',
-      'date_taken' => 'nullable|date',
+      'datetime_taken' => 'nullable|date_format:Y-m-d\\TH:i',
     ];
   }
 
@@ -57,7 +57,7 @@ class StoreRequest extends FormRequest {
     return $coords;
   }
 
-  protected function getDateTaken(Highlight $highlight, Image $image) {
+  protected function getDateTimeTaken(Highlight $highlight, Image $image) {
     $date = $highlight->start_date;
     try {
       $exif = $image->exif();
@@ -65,6 +65,7 @@ class StoreRequest extends FormRequest {
         $date = new \DateTime($exif['DateTimeOriginal']);
       }
     } catch (Exception $e) {
+      dd($e);
     }
     return $date;
   }
@@ -77,8 +78,10 @@ class StoreRequest extends FormRequest {
       $input['lat'] = $coords['lat'];
       $input['lon'] = $coords['lon'];
     }
-    if (empty($input['date_taken'])) {
-      $input['date_taken'] = $this->getDateTaken($highlight, $img);
+    if (empty($input['datetime_taken'])) {
+      $input['datetime_taken'] = $this->getDateTimeTaken($highlight, $img);
+    } else {
+      $input['datetime_taken'] = Carbon::createFromFormat("Y-m-d\\TH:i", $input['datetime_taken']);
     }
     $img->orientate();
     $uploadPath = 'pictures/' . $highlight->trip_id . '/' . $highlight->id . '/' . $image->hashName();

@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+{{ $trip->name }}
+@endsection
 
 @section('content')
 @include('shared.breadcrumbs', [ 'breadcrumbs' => $breadcrumbs])
@@ -12,7 +15,7 @@
   .col
     %div.trip-map#map{'style' => 'width:100%;height:500px'}
     %div.trip-description
-      {{ $trip->description }}
+      {!! nl2br($trip->description) !!}
 .row
   .col.attendees
     %h2 Attendees

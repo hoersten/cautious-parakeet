@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+{{ $trip->name }} - {{ $highlight->name }}
+@endsection
 
 @section('content')
 @include('shared.breadcrumbs', [ 'breadcrumbs' => $breadcrumbs])
@@ -9,14 +12,19 @@
     %h2
       {{ $highlight->start_date }}{{ (($highlight->start_date === $highlight->end_date) ? '' : ' - ' . $highlight->end_date) }}
 .row
-  .col-sm-6
+  .col
     %div.highlight-map#map{ 'style' => 'width:100%;height:250px;' }
-  .col-sm-6
+.row
+  .col
+    %div.highlight-description
+      {!! nl2br($highlight->description) !!}
+.row
+  .col
     %h2
       Pictures
     .row
       @foreach($highlight->pictures as $picture)
-      .col-3
+      .col-lg-4.col-md-6.col-12
         @can('update', $highlight)
         .edit-tools.text-right
           %a.mr-1{'href' => route('pictures.edit', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture]) }><
@@ -26,18 +34,17 @@
             %i.fas.fa-trash
           @endcan
         @endcan
-        %a{'id' => 'pic-' . $picture->id, 'href' => route('pictures.show', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture ]), 'data-toggle' => 'lightbox', 'data-gallery' => 'highlights', 'data-footer' => $picture->caption,  'data-type' => 'image' }
+        %a{'id' => 'pic-' . $picture->id, 'href' => route('pictures.show', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture ]), 'data-toggle' => 'lightbox', 'data-gallery' => 'highlights', 'data-footer' => $picture->caption . '<br><small>' . $picture->datetime_taken . '</small>',  'data-type' => 'image' }
           %img.img-fluid{'src' => route('pictures.show', ['trip' => $trip, 'highlight' => $highlight, 'picture' => $picture ])}
-          %p=$picture->caption
+          %p
+            {{$picture->caption}}
+            %br
+            %small=$picture->datetime_taken
       @endforeach
     @can('update', $highlight)
     %a.btn.btn-primary{ 'href' => route('pictures.create', ['trip' => $trip, 'highlight' => $highlight])}
       Add Pictures
     @endcan
-.row
-  .col
-    %div.highlight-description
-      {{ $highlight->description }}
 .row
   .col.attendees
     %h2 Attendees

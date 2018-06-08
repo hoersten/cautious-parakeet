@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+Create a New Highlight
+@endsection
 
 @section('content')
 @include('shared.breadcrumbs', [ 'breadcrumbs' => $breadcrumbs])

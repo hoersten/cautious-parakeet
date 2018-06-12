@@ -13,8 +13,8 @@
       @include('shared.date_range', [ 'obj' => $trip ])
 .row
   .col
-    %div.trip-map#map{'style' => 'width:100%;height:500px'}
-    %div.trip-description
+    %div.trip-map.mb-3#map{'style' => 'width:100%;height:500px'}
+    %div.trip-description.mb-3
       {!! nl2br($trip->description) !!}
 .row
   .col.attendees

@@ -13,6 +13,9 @@
               %a.nav-link{ 'href' => route('trips.create') }
                 New Trip
             %li.nav-item
+              %a.nav-link{ 'href' => route('users.show')}
+                Account
+            %li.nav-item
               %a.nav-link{ 'href' => route('logout'), 'onclick' => "event.preventDefault(); document.getElementById('logout-form').submit();" }
                 Logout
 

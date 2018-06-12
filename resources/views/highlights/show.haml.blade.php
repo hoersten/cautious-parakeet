@@ -13,10 +13,10 @@
       {{ $highlight->start_date }}{{ (($highlight->start_date === $highlight->end_date) ? '' : ' - ' . $highlight->end_date) }}
 .row
   .col
-    %div.highlight-map#map{ 'style' => 'width:100%;height:250px;' }
+    %div.highlight-map.mb-3#map{ 'style' => 'width:100%;height:250px;' }
 .row
   .col
-    %div.highlight-description
+    %div.highlight-description.mb-3
       {!! nl2br($highlight->description) !!}
 .row
   .col
@@ -42,7 +42,7 @@
             %small=$picture->datetime_taken
       @endforeach
     @can('update', $highlight)
-    %a.btn.btn-primary{ 'href' => route('pictures.create', ['trip' => $trip, 'highlight' => $highlight])}
+    %a.btn.btn-primary.mb-3{ 'href' => route('pictures.create', ['trip' => $trip, 'highlight' => $highlight])}
       Add Pictures
     @endcan
 .row

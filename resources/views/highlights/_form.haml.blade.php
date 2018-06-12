@@ -74,13 +74,13 @@
     %label.col-form-label{'for' => 'start_date'}
       Start Date
   .col-auto
-    %input#start_date.form-control{'type' => 'date', 'required' => true, 'name' => 'start_date', 'value' => "#{ old('start_date', $highlight->start_date) }" }
+    %input#start_date.form-control{'type' => 'date', 'required' => true, 'name' => 'start_date', 'value' => "#{ old('start_date', (empty($highlight->start_date) ? $trip->start_date : $highlight->start_date)) }" }
 .form-group.row
   .col-sm-2
     %label.col-form-label{'for' => 'end_date'}
       End Date
   .col-auto
-    %input#end_date.form-control{'type' => 'date', 'required' => true, 'name' => 'end_date', 'value' => "#{ old('end_date', $highlight->end_date) }" }
+    %input#end_date.form-control{'type' => 'date', 'required' => true, 'name' => 'end_date', 'value' => "#{ old('end_date', (empty($highlight->end_date) ? $trip->end_date : $highlight->end_date)) }" }
 .form-group.row
   .col
     %label.col-form-label{'for' => 'description'}
@@ -92,6 +92,9 @@
       Attendees
     %select#attendees.form-control{'required' => true, 'name' => 'attendees[]', 'multiple' => true }
       - $prev = old('attendees', $highlight->attendees()->get()->pluck(['id'])->toArray())
+      @if (empty($prev))
+      - $prev = $trip->attendees()->get()->pluck(['id'])->toArray()
+      @endif
       @foreach($attendees as $attendee)
       %option{'value' => $attendee->id, 'selected' => in_array($attendee->id, $prev)}
         {{ $attendee->first_name }} {{ $attendee->last_name }}
